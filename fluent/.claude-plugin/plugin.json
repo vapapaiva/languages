@@ -1,0 +1,29 @@
+{
+  "name": "fluent",
+  "version": "0.2.0",
+  "description": "Fluent — AI Language Learning Kit. Personal AI tutor for any target language. Uses spaced repetition (SM-2), active recall, adaptive difficulty, and tracking across 6 databases. Daily practice: /fluent-review, /fluent-vocab, /fluent-writing, /fluent-speaking, /fluent-reading, /fluent-learn. Start with /fluent-setup.",
+  "author": {
+    "name": "Mohammad Kermani",
+    "url": "https://github.com/m98"
+  },
+  "homepage": "https://github.com/m98/fluent",
+  "repository": "https://github.com/m98/fluent",
+  "license": "MIT",
+  "keywords": [
+    "language-learning",
+    "education",
+    "spaced-repetition",
+    "sm2",
+    "tutor",
+    "flashcards",
+    "dutch",
+    "spanish",
+    "french",
+    "german",
+    "japanese",
+    "korean",
+    "arabic"
+  ],
+  "skills": "./.claude/skills/",
+  "hooks": "./.claude/hooks/hooks.json"
+}
