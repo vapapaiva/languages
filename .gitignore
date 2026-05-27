@@ -1,0 +1,10 @@
+# Claude Code — machine-specific permissions, not for version control
+.claude/settings.local.json
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
