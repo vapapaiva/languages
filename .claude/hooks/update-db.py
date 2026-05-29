@@ -147,14 +147,20 @@ def update_learner_profile(profile: dict, session: dict):
     today = session["date"]
     last = profile.get("last_updated", "")
 
-    if last == today:
-        pass
+    if not last or last == today:
+        pass  # first session ever, or same day — no streak change
     elif last == yesterday(today):
         profile["current_streak_days"] = profile.get("current_streak_days", 0) + 1
+    elif last > today:
+        # last_updated is in the future (e.g. a date-entry error on a prior commit).
+        # Don't reset the streak — just treat it as "same window".
+        pass
     else:
+        # Gap of 2+ days — streak resets.
         profile["current_streak_days"] = 1
 
     profile["last_updated"] = today
+    profile["last_session_date"] = today  # keep in sync
     profile["total_sessions"] = profile.get("total_sessions", 0) + 1
     profile["total_study_minutes"] = profile.get("total_study_minutes", 0) + session.get("duration_minutes", 0)
 
