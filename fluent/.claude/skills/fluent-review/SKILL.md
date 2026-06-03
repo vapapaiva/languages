@@ -77,7 +77,23 @@ Generate an exercise matched to `item_type`:
 - **vocabulary**: recognition (target → native), production (native → target), or cloze — rotate modes.
 - **grammar_rule**: a fill-in or error-correction exercise that tests the rule.
 
-Present one at a time:
+**Batching rule** — group items by complexity before presenting:
+
+- **Batch (all at once):** vocabulary recognition (word → translation), short error-correction phrases (fix this phrase). Number them and ask for all answers in one reply.
+- **One at a time:** grammar exercises requiring a full sentence, any item marked `priority: critical`.
+
+Batch format:
+
+```markdown
+## Reviews {N}–{M}/{total}
+
+**1.** {exercise 1}
+**2.** {exercise 2}
+...
+**N.** {exercise N}
+```
+
+Single-item format (for complex / critical items):
 
 ```markdown
 ## Review {N}/{total} — {priority emoji}

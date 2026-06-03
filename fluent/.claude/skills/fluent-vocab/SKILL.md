@@ -1,6 +1,6 @@
 ---
 name: fluent-vocab
-description: Run an interactive vocabulary drill session with flashcard-style prompts, spaced repetition, and per-answer feedback. Triggered only when the learner types /fluent-vocab. Reads spaced-repetition / mistakes / mastery DBs to pick words, presents one word at a time, scores each answer, and calls fluent-db-updater at the end.
+description: Run an interactive vocabulary drill session with flashcard-style prompts, spaced repetition, and per-answer feedback. Triggered only when the learner types /fluent-vocab. Reads spaced-repetition / mistakes / mastery DBs to pick words, batches simple recognition/cloze items 5 per message, presents production exercises one at a time, scores each answer, and calls fluent-db-updater at the end.
 allowed-tools: Read, Write, Bash
 disable-model-invocation: true
 ---
@@ -44,25 +44,38 @@ Priority order:
 
 Limit: `spaced-repetition.daily_limits.review_items_per_day` (default 20).
 
-### 3. Present one word at a time
+### 3. Batching rule
 
-Rotate the three modes so the session is not monotonous.
+Group words by exercise mode before presenting:
 
-**Recognition** (target_language → native):
+- **Batch (all at once):** Recognition (word → translation) and Cloze (fill one missing word). Number them and ask for all answers in one reply.
+- **One at a time:** Production (native → target in a full sentence), any word with mastery ≤ 1 that needs more context.
+
+Rotate modes across the session so it stays varied.
+
+**Recognition batch** (target_language → native):
 
 ```markdown
-## Word {N}/{total}
+## Words {N}–{M}/{total}
 
-**{target_language}:** {word}
-
-**Context:** {example_sentence}
-
-**What does it mean in {native_language}?**
-
-**Type your answer:**
+**1.** {word 1} — что значит?
+**2.** {word 2} — что значит?
+...
+**N.** {word N} — что значит?
 ```
 
-**Production** (native → target_language):
+**Cloze batch** (fill in the blank):
+
+```markdown
+## Words {N}–{M}/{total}
+
+**1.** {sentence with _____}
+**2.** {sentence with _____}
+...
+**N.** {sentence with _____}
+```
+
+**Production** (one at a time — native → target_language):
 
 ```markdown
 ## Word {N}/{total}
@@ -74,18 +87,6 @@ Rotate the three modes so the session is not monotonous.
 **How do you say this in {target_language}?**
 
 **Type your answer:**
-```
-
-**Cloze** (fill in the blank):
-
-```markdown
-## Word {N}/{total}
-
-**Complete the sentence:**
-
-{target_language sentence with _____ where the word goes}
-
-**Type the missing word:**
 ```
 
 ### 4. Feedback after each answer

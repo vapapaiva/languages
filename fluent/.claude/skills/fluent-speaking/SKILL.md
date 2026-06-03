@@ -1,6 +1,6 @@
 ---
 name: fluent-speaking
-description: Run an interactive typed conversation session simulating spoken practice — free-flowing dialogue, role-plays, and opinion questions prioritizing communication over perfect grammar. Triggered only when the learner types /fluent-speaking. Asks questions one at a time in the target language, evaluates clarity and naturalness first and grammar second, and updates all databases at the end.
+description: Run an interactive typed conversation session simulating spoken practice — free-flowing dialogue, role-plays, and opinion questions prioritizing communication over perfect grammar. Triggered only when the learner types /fluent-speaking. Can throw multiple topics at once for warm-up or rapid exploration; uses single-exchange format during flowing conversation. Evaluates clarity and naturalness first and grammar second, and updates all databases at the end.
 allowed-tools: Read, Write, Bash
 disable-model-invocation: true
 ---
@@ -65,17 +65,33 @@ A2 topics:
 
 B1+: opinions, comparisons, hypotheticals, complaints, narratives.
 
-### 4. One question at a time
+### 4. Questions and topics
+
+**Batching rule:**
+- For warm-up or rapid topic exploration: throw **all topics / questions at once** — learner picks one to go deep on, or responds to all briefly.
+- For free conversation and role-play: stay **one exchange at a time** so it feels like a real dialogue.
+
+Multi-topic opener (use at session start or when changing pace):
 
 ```markdown
-## Question {N}: {Topic}
+## Let's talk! Pick any or answer them all:
 
-{Question in target language}
-
-**Type your answer in {target_language}:**
+**1.** {question on topic 1}
+**2.** {question on topic 2}
+**3.** {question on topic 3}
 ```
 
-Build the conversation naturally — after 3-4 Qs on one topic, transition: `Interessant! Let's talk about something else...`.
+Single-exchange format (for flowing conversation):
+
+```markdown
+## {Topic}
+
+{Question or statement in target language}
+
+**Your turn:**
+```
+
+Build conversation naturally — after 3-4 exchanges on one topic, transition: `Interessant! Let's talk about something else...`.
 
 ### 5. Evaluate
 
@@ -214,7 +230,7 @@ Learner: "Ik ben Mohammad. Ik kom van Iran maar ik woon nu in Nederland."
 ## Critical Rules
 
 - **Communication first.** A clear message with a missed article scores better than a grammatically perfect but confusing answer.
-- **One question at a time.** Wait for reply before next.
+- **Multi-topic opener for warm-up; single-exchange during flowing conversation.** See batching rule in §4.
 - **Stay in the target language** for questions and transitions. Drop to native only for explanations.
 - **Praise natural expression.** If the learner uses "Nou..." or "Eh..." correctly, call it out — those are fluency markers.
 - **Don't over-correct.** A speaking session with 20 red marks kills confidence.

@@ -1,6 +1,6 @@
 ---
 name: fluent-reading
-description: Run an interactive reading comprehension session with a short target-language text followed by main-idea, detail, vocabulary-in-context, inference, and true/false questions. Triggered only when the learner types /fluent-reading. Presents the text, waits for the learner to read, then asks questions one at a time with immediate feedback, and optionally adds new vocabulary to the spaced-repetition queue.
+description: Run an interactive reading comprehension session with a short target-language text followed by main-idea, detail, vocabulary-in-context, inference, and true/false questions. Triggered only when the learner types /fluent-reading. Presents the text, waits for the learner to read, then asks all questions in one batch message, gives batch feedback, and optionally adds new vocabulary to the spaced-repetition queue.
 allowed-tools: Read, Write, Bash
 disable-model-invocation: true
 ---
@@ -77,59 +77,30 @@ Match the topic to `learner-profile.focus_areas` when possible.
 Take your time. When you're done, type **"ready"**.
 ```
 
-### 5. Question sequence (one at a time)
+### 5. Question sequence
 
-Rotate across these types:
+After the learner signals they've read the text, present **all questions at once** in a single message. The learner answers them all in one reply — they already have the full context.
 
-**Main idea:**
+**Batching rule:**
+- True/False, multiple-choice, and single-word vocabulary questions → always batch.
+- Open inference or extended-response questions (requires 2+ sentences) → include in the same batch but placed last so they don't block quick items.
+
+Format — all questions together:
+
 ```markdown
-## Vraag 1: Hoofdidee (main idea)
+## Questions
 
-{question in target language}
+**1.** {main idea — multiple choice}
+   a) {option 1}  b) {option 2}  c) {option 3}
 
-a) {option 1}
-b) {option 2}
-c) {option 3}
+**2.** {detail question}
 
-**Type a, b, or c:**
-```
+**3.** In the text it says "{word/phrase}". What does this mean?
+   a) {meaning 1}  b) {meaning 2}  c) {meaning 3}
 
-**Details:**
-```markdown
-## Vraag 2: Details
+**4.** True or false: {statement}
 
-{specific question about the text}
-
-**Type your answer:**
-```
-
-**Vocabulary in context:**
-```markdown
-## Vraag 3: Vocabulaire
-
-In the text it says "{word/phrase}". What does this mean?
-
-a) {meaning 1}
-b) {meaning 2}
-c) {meaning 3}
-```
-
-**Inference:**
-```markdown
-## Vraag 4: Begrijpen
-
-{question requiring inference — not directly stated}
-
-**Answer in {target language}:**
-```
-
-**True / false:**
-```markdown
-## Vraag 5: Waar of niet waar?
-
-{statement}
-
-**Type your answer:**
+**5.** {inference question — answer in {target language}}
 ```
 
 ### 6. Feedback per question
